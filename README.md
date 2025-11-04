@@ -16,13 +16,6 @@ FedBasic/
 │   ├── server_app.py     # Flower ServerApp
 │   └── run.py            # Alternative Python script
 │
-├── example/              # Advanced example (MobileNet-V1 + Personalized FL)
-│   ├── task.py
-│   ├── client_app.py
-│   ├── server_app.py
-│   ├── strategy.py
-│   └── run.py
-│
 ├── flwr-0.6.12/          # Deprecated - Legacy Flower v0.6.12 implementation
 │
 └── pyproject.toml        # Dependencies and Flower configuration
@@ -58,8 +51,6 @@ python run.py
 
 ## 📂 File Structure
 
-### `project/` - Minimal Template
-
 | File | Description |
 |------|-------------|
 | `models.py` | SimpleCNN (3 conv layers, ~87K params) |
@@ -68,10 +59,6 @@ python run.py
 | `server_app.py` | Flower server with FedAvg strategy |
 | `strategy.py` | FedAvg wrapper (easy to customize) |
 | `run.py` | Alternative Python execution script |
-
-### `example/` - Advanced Template
-
-Features MobileNet-V1, non-IID data (Dirichlet α=0.5), personalized FL with custom strategy.
 
 ---
 
