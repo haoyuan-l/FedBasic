@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pytorch-basic-example"
+version = "1.23.0"
+description = "Template for Implementation with Flower and Pytorch"
+license = "Apache-2.0"
+dependencies = [
+    "flwr[simulation]>=1.22.0",
+    "flwr-datasets[vision]>=0.5.0",
+    "torch>=2.8.0",
+    "torchvision>=0.23.0",
+    "wandb==0.17.8",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.flwr.app]
+publisher = haoyuanli"
+
+[tool.flwr.app.components]
+# These entries point to your ServerApp and ClientApp definitions, using the format <module>:<object>.
+# Update these import paths if you rename your modules or the variables
+serverapp = "project.server_app:app"
+clientapp = "project.client_app:app"
+
+[tool.flwr.app.config]
+num-server-rounds = 10
+fraction-train = 0.25
+fraction-evaluate = 0.5
+local-epochs = 5
+server-device = "cpu"
+
+[tool.flwr.federations]
+# Federations allow you to define how your app will run in different environments
+# You can configure multiple federations, such as local simulations or remote deployments
+default = "local-sim"
+
+#[tool.flwr.federations.remote-deployment]
+#address = "<SUPERLINK-ADDRESS>:<PORT>"
+#root-certificate = "path/to/root/cert.pem"  # Optional, for TLS
+# #insecure = true  # Disable TLS (not recommended for production
+
+[tool.flwr.federations.local-sim]
+options.num-supernodes = 10
+options.backend.client-resources.num-cpus = 2 # each ClientApp assumes to use 2CPUs
+options.backend.client-resources.num-gpus = 0.0 # ratio of VRAM a ClientApp has access to
+[tool.flwr.federations.local-sim-gpu]
+options.num-supernodes = 10
+options.backend.client-resources.num-cpus = 2
+options.backend.client-resources.num-gpus = 0.25
+
+# To run a specific federation, use the following command:
+# flwr run <path-to-your-app> <your-federation-name>
